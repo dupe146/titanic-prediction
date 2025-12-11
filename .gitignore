@@ -14,10 +14,10 @@ __pycache__/
 # macOS
 .DS_Store
 
-# Model files (we'll upload these separately)
-# Remove these lines if you want to include models in GitHub
+# Model files (generated during build)
 titanic_model.pkl
 feature_columns.pkl
 
-# Data (optional - remove this line if you want dataset on GitHub)
-data/
+# Keep train.csv, ignore other data files
+data/*.pkl
+data/*.zip

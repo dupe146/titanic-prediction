@@ -16,7 +16,7 @@ print("="*60)
 
 # Load dataset (from data folder)
 print("\n[1/6] Loading dataset...")
-data = pd.read_csv('data/train.csv')
+data = pd.read_csv('train.csv')
 print(f"✓ Dataset loaded: {len(data)} passengers")
 
 # Data preprocessing
