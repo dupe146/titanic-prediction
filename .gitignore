@@ -1,0 +1,23 @@
+# Virtual Environment
+venv/
+env/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.Python
+
+# Jupyter
+.ipynb_checkpoints/
+
+# macOS
+.DS_Store
+
+# Model files (we'll upload these separately)
+# Remove these lines if you want to include models in GitHub
+titanic_model.pkl
+feature_columns.pkl
+
+# Data (optional - remove this line if you want dataset on GitHub)
+data/

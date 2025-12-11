@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Titanic Survival Predictor</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        .header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .header p { font-size: 1.1em; }
+        .form-container { padding: 40px; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1em;
+        }
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2em;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: transform 0.2s;
+        }
+        .submit-btn:hover { transform: translateY(-2px); }
+        .submit-btn:disabled { background: #ccc; cursor: not-allowed; }
+        .result {
+            margin-top: 30px;
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            display: none;
+        }
+        .result.survived {
+            background: #d4edda;
+            border: 2px solid #28a745;
+        }
+        .result.not-survived {
+            background: #f8d7da;
+            border: 2px solid #dc3545;
+        }
+        .result h2 { font-size: 2em; margin-bottom: 10px; }
+        .result.survived h2 { color: #28a745; }
+        .result.not-survived h2 { color: #dc3545; }
+        .probability { font-size: 1.3em; margin-top: 10px; font-weight: 600; }
+        @media (max-width: 600px) {
+            .form-row { grid-template-columns: 1fr; }
+            .header h1 { font-size: 2em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚢 Titanic Survival Predictor</h1>
+            <p>Machine Learning Prediction System</p>
+        </div>
+        
+        <div class="form-container">
+            <form id="predictionForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Passenger Class *</label>
+                        <select name="pclass" required>
+                            <option value="">Select Class</option>
+                            <option value="1">1st Class (Upper)</option>
+                            <option value="2">2nd Class (Middle)</option>
+                            <option value="3">3rd Class (Lower)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Gender *</label>
+                        <select name="sex" required>
+                            <option value="">Select Gender</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Age *</label>
+                        <input type="number" name="age" min="0" max="100" required placeholder="Enter age">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Fare (£) *</label>
+                        <input type="number" name="fare" min="0" step="0.01" required placeholder="Enter fare">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Siblings/Spouses Aboard</label>
+                        <input type="number" name="sibsp" min="0" max="10" value="0">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Parents/Children Aboard</label>
+                        <input type="number" name="parch" min="0" max="10" value="0">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Port of Embarkation *</label>
+                    <select name="embarked" required>
+                        <option value="">Select Port</option>
+                        <option value="C">Cherbourg (France)</option>
+                        <option value="Q">Queenstown (Ireland)</option>
+                        <option value="S">Southampton (England)</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="submit-btn">🔮 Predict Survival</button>
+            </form>
+            
+            <div id="result" class="result">
+                <h2 id="resultText"></h2>
+                <div class="probability" id="probability"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.getElementById('predictionForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+            
+            const submitBtn = this.querySelector('.submit-btn');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = '⏳ Predicting...';
+            submitBtn.disabled = true;
+            
+            try {
+                const response = await fetch('/predict', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                const resultDiv = document.getElementById('result');
+                const resultText = document.getElementById('resultText');
+                const probability = document.getElementById('probability');
+                
+                resultDiv.style.display = 'block';
+                
+                if (result.prediction === 1) {
+                    resultDiv.className = 'result survived';
+                    resultText.textContent = '✅ SURVIVED';
+                    probability.textContent = `Survival Probability: ${(result.probability * 100).toFixed(1)}%`;
+                } else {
+                    resultDiv.className = 'result not-survived';
+                    resultText.textContent = '❌ NOT SURVIVED';
+                    probability.textContent = `Survival Probability: ${(result.probability * 100).toFixed(1)}%`;
+                }
+                
+                resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            } catch (error) {
+                alert('Error: Please ensure Flask server is running');
+                console.error(error);
+            } finally {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>
