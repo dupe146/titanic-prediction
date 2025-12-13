@@ -108,12 +108,11 @@ The model uses 7 key features for prediction:
 
 ## 🌐 Live Demo
 
-[Add your deployed link here after deployment]
+https://titanic-prediction-wn6k.onrender.com/
 
 ## 👨‍💻 Author
 
-**Your Name**
-- GitHub: [@yourusername](https://github.com/yourusername)
+Islamiat Modupeoluwa
 
 ## 📄 License
 
