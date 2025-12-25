@@ -26,8 +26,6 @@ This project uses machine learning to predict whether a passenger would survive 
 - Python 3.8 or higher
 - pip package manager
 
-
-##  Installation & Setup
 ## How to Test the Application
 
 ### Option 1: Try the Live Demo (No Setup Required)
@@ -75,7 +73,7 @@ python app.py
 
 # Open browser
 http://127.0.0.1:5001
-
+```
 ## 📁 Project Structure
 ```
 titanic-prediction/
@@ -100,16 +98,7 @@ The model uses 7 key features for prediction:
 - **Fare**: Ticket fare in British pounds
 - **Embarked**: Port of embarkation (C=Cherbourg, Q=Queenstown, S=Southampton)
 
-## 🛠️ Technologies Used
-
-- **Backend**: Python, Flask
-- **ML Library**: Scikit-learn
-- **Data Processing**: Pandas, NumPy
-- **Frontend**: HTML, CSS, JavaScript
-- **Model**: Logistic Regression
-
 ## 📈 Model Details
-
 - **Algorithm**: Logistic Regression
 - **Training Data**: 80% of dataset (713 passengers)
 - **Test Data**: 20% of dataset (178 passengers)
@@ -132,7 +121,6 @@ The techniques used here apply to:
 - 💰 **Finance:** Credit risk assessment
 
 ## 📊 Model Insights
-
 **Why ~80% accuracy?**
 - Some passengers' fates were truly random (luck)
 - Missing data (we don't know everyone's cabin location)
@@ -145,10 +133,6 @@ The techniques used here apply to:
 4. **Fare**: Higher fare = better cabin location = easier escape
 
 **This mirrors real history:** "Women and children first" policy
-
-## 🌐 Live Demo
-
-https://titanic-prediction-wn6k.onrender.com/
 
 ## 👨‍💻 Author
 
@@ -163,6 +147,3 @@ This project is for educational purposes.
 - Dataset: [Kaggle Titanic Dataset](https://www.kaggle.com/c/titanic/data)
 - Inspiration: Machine Learning Classification Project
 
----
-
-**⭐ If you found this project helpful, please give it a star!**
