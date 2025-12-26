@@ -30,7 +30,7 @@ This project uses machine learning to predict whether a passenger would survive 
 
 ### Option 1: Try the Live Demo (No Setup Required)
 Visit the live application: 
-https://house-price-prediction-9400.onrender.com
+https://titanic-survival-prediction-s0um.onrender.com
 
 **Test Cases to Try:**
 
