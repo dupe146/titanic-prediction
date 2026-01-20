@@ -15,7 +15,7 @@ __pycache__/
 .DS_Store
 
 # Model files (generated during build)
-titanic_model.pkl
+#titanic_model.pkl
 feature_columns.pkl
 
 # Keep train.csv, ignore other data files
